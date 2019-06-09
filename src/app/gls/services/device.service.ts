@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
-import {Device} from "../model/device";
+import {Observable} from 'rxjs';
+import {Device} from '../model/device';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DeviceService {
 
