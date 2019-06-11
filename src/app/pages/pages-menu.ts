@@ -4,12 +4,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Monitoramento',
     icon: 'nb-cloudy',
-    link: '/pages/dashboard',
+    link: '/pages/monitor',
     home: true,
   },
   {
     title: 'Dispositivos',
     icon: 'nb-gear',
     link: '/pages/devices',
-  }
+  },
 ];
