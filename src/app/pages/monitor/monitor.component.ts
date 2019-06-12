@@ -3,7 +3,7 @@ import {Device} from '../../gls/model/device';
 import {DeviceService} from '../../gls/services/device.service';
 
 @Component({
-  selector: 'ngx-ecommerce',
+  selector: 'ngx-monitor',
   templateUrl: './monitor.component.html',
 })
 export class MonitorComponent implements OnInit {

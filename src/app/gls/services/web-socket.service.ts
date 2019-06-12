@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as Rx from 'rxjs/Rx';
 import {NGXLogger} from 'ngx-logger';
 import {Message} from '../model/message';
-import {Observable} from 'rxjs';
+import {Observable, Observer, Subject} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -10,16 +10,20 @@ import {map} from 'rxjs/operators';
 })
 export class WebSocketService {
 
-  private subject: Rx.Subject<MessageEvent>;
-  private ws: WebSocket;
+  ws: WebSocket;
+  message$: Subject<Message>;
+
+  private subject: Subject<MessageEvent>;
 
   constructor(private logger: NGXLogger) {
     // empty
   }
 
-  public connect(url): Rx.Subject<MessageEvent> {
+  public connect(url): Subject<MessageEvent> {
     if (!this.subject) {
       this.subject = this.create(url);
+      this.subject.asObservable().subscribe(m => this.message$.next(JSON.parse(m.data) as Message));
+      this.message$ = new Subject();
       this.logger.info(`Successfully connected: ${url}`);
     }
     return this.subject;
@@ -29,14 +33,10 @@ export class WebSocketService {
     this.ws.send(JSON.stringify(message));
   }
 
-  public listen(): Observable<Message> {
-    return this.subject.asObservable().pipe(map(m => JSON.parse(m.data) as Message));
-  }
-
-  private create(url): Rx.Subject<MessageEvent> {
+  private create(url): Subject<MessageEvent> {
     this.ws = new WebSocket(url);
 
-    const observable = Rx.Observable.create((obs: Rx.Observer<MessageEvent>) => {
+    const observable = Observable.create((obs: Observer<MessageEvent>) => {
       this.ws.onmessage = obs.next.bind(obs);
       this.ws.onerror = obs.error.bind(obs);
       this.ws.onclose = obs.complete.bind(obs);
@@ -49,7 +49,7 @@ export class WebSocketService {
         }
       },
     };
-    return Rx.Subject.create(observer, observable);
+    return Subject.create(observer, observable);
   }
 
 }

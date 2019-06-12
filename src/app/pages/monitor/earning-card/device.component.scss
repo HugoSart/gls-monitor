@@ -5,6 +5,16 @@
     position: relative;
   }
 
+  .blink {
+    animation: blink-animation 500ms alternate infinite;
+  }
+
+  @keyframes blink-animation {
+    to {
+      box-shadow: 0 0 45px 0 rgba(255, 0, 0, 1);
+    }
+  }
+
   .nb-arrow-right {
     position: absolute;
     top: 0;

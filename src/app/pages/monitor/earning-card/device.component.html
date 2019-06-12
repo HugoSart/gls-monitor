@@ -1,14 +1,7 @@
-<nb-flip-card [showToggleButton]="false" [flipped]="flipped">
+<nb-flip-card [ngClass]="{blink: hasRecentGunshot}" [showToggleButton]="false" [flipped]="flipped">
   <nb-card-front>
     <nb-card size="xsmall">
-      <ngx-device-card-front [device]="device"></ngx-device-card-front>
-      <i class="nb-arrow-right" (click)="toggleFlipView()"></i>
+      <ngx-device-card-front [device]="device" (gunshot)="handleGunshot($event)"></ngx-device-card-front>
     </nb-card>
   </nb-card-front>
-  <nb-card-back>
-    <nb-card size="xsmall">
-      <ngx-device-card-back></ngx-device-card-back>
-      <i class="nb-arrow-right" (click)="toggleFlipView()"></i>
-    </nb-card>
-  </nb-card-back>
 </nb-flip-card>

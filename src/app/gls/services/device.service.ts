@@ -5,6 +5,7 @@ import {WebSocketService} from './web-socket.service';
 import {Message} from '../model/message';
 import {Frequency} from '../model/frequency';
 import {NGXLogger} from 'ngx-logger';
+import {Gunshot} from '../model/gunshot';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +30,7 @@ export class DeviceService {
 
   fetch(): Observable<Device[]> {
     const sub: Subject<Device[]> = new Subject();
-    this.client.listen().subscribe(m => {
+    this.client.message$.subscribe(m => {
       if (m.destination === 'response/device.fetch') {
         sub.next(JSON.parse(m.body) as Device[]);
         sub.complete();
@@ -41,11 +42,23 @@ export class DeviceService {
 
   frequencies(deviceId: number): Observable<Frequency> {
     const sub: Subject<Frequency> = new Subject();
-    this.client.listen().subscribe(m => {
+    this.client.message$.subscribe(m => {
       if (m.destination === 'topic/device.frequency') {
         const frequency = JSON.parse(m.body) as Frequency;
-        // if (frequency.deviceId === deviceId)
+        if (frequency.deviceId === deviceId)
           sub.next(frequency);
+      }
+    });
+    return sub;
+  }
+
+  gunshots(deviceId: number): Observable<Gunshot> {
+    const sub: Subject<Gunshot> = new Subject();
+    this.client.message$.subscribe(m => {
+      if (m.destination === 'topic/device.gunshot') {
+        const gunshot = JSON.parse(m.body) as Gunshot;
+        if (gunshot.deviceId === deviceId)
+          sub.next(gunshot);
       }
     });
     return sub;

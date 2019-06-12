@@ -111,7 +111,7 @@
     /deep/ nb-menu {
       & > .menu-items {
         & > .menu-item:first-child {
-          .menu-title {
+          .menu-new {
             &::after {
               content: 'new';
               color: nb-theme(color-white);

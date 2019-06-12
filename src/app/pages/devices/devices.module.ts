@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 
 import {DevicesComponent} from './devices.component';
-import {SmartTableComponent} from "./smart-table/smart-table.component";
-import {Ng2SmartTableModule} from "ng2-smart-table";
-import {ThemeModule} from "../../@theme/theme.module";
-import {TablesRoutingModule} from "../tables/tables-routing.module";
+import {SmartTableComponent} from './smart-table/smart-table.component';
+import {Ng2SmartTableModule} from 'ng2-smart-table';
+import {ThemeModule} from '../../@theme/theme.module';
 
 @NgModule({
   imports: [
@@ -13,7 +12,7 @@ import {TablesRoutingModule} from "../tables/tables-routing.module";
   ],
   declarations: [
     DevicesComponent,
-    SmartTableComponent
+    SmartTableComponent,
   ],
 })
 export class DevicesModule { }
